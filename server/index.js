@@ -36,5 +36,19 @@ connection.query(sql, function (err, rows, fields) {
     console.log(rows.id, rows.user_id, rows.td_name, rows.loc_x, rows.loc_y, rows.description, rows.category); 
 })
 
+var sql2 = 'update song set name="I can\'t stop me", year=2020 where name="more and more"';
+conn.query(sql2, function(err,rows,fields){
+  console.log(rows.name); // 대상으로 하는 행 없으므로 의미 x
+})
+
+var sql3 = 'delete from song  where name="I can\'t stop me"';
+conn.query(sql3, function(err,rows,fields){
+  console.log(rows.name); // 대상으로 하는 행 없으므로 의미 x
+})
+var sql4 = 'delete from song  where name=?';
+var params = ["I can't stop me"];
+conn.query(sql4, params, function(err,rows,fields){
+  console.log(rows.name); // 대상으로 하는 행 없으므로 의미 x
+})
 
 connection.end();
