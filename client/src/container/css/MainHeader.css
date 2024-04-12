@@ -1,0 +1,32 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.left-section{
+    flex:2
+}
+.right-section{
+    flex:1
+}
+
+.right-section li{
+    list-style-type: none;
+    float:right;
+    padding:10px;
+    font-size:20px;
+    color:black;
+}
+li:hover{
+    text-decoration: underline;
+
+}
+
+a:focus,
+a:active {
+  outline: none !important;
+}

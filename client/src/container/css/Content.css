@@ -1,0 +1,91 @@
+.content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.wrap {
+    display: flex;
+    position: absolute;
+    width: auto;
+}
+
+.Icon {
+    margin-top: 130px;
+    width: 100px;
+    z-index: 1;
+    animation:Icon .5s cubic-bezier(.25,.46,.45,.94) both
+}
+
+.logo {
+    margin-top: 150px;
+    margin-left: 40px;
+    width: 500px;
+    height: 75px;
+}
+
+.search {
+    width: 500px;
+    height: 40px;
+    margin-top: 270px;
+    z-index: 1;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(233, 233, 233);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+input[type=text] {
+    font-family: "NanumSquareNeo";
+	color:grey;
+}
+
+input[type=text]:focus {
+    color:black;
+}
+
+.select{
+    font-family: "NanumSquareNeo";
+    width:100px;
+    height: 40px;
+    padding: 10px;
+    z-index: 1;
+    margin-top: 270px;
+    margin-left: -100px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    background-color: rgb(233, 233, 233);
+    text-align: center;
+}
+
+.searchBtn{
+    font-family: "NanumSquareNeo";
+    font-size: 16px;
+    width:80px;
+    height: 40px;
+    margin-top: 270px;
+    margin-left: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    background-color: rgb(233, 233, 233);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.searchBtn:active {
+    box-shadow: inset -.3rem -.1rem 1.4rem  #FBFBFB, inset .3rem .4rem .8rem #BEC5D0; 
+    cursor: pointer;
+}
+
+.footer{
+    position: relative !important;
+    margin-top: 580px;
+    margin-left: 1300px;
+    color:rgb(233, 233, 233);
+    z-index: 1;
+}

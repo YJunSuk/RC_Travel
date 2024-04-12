@@ -1,12 +1,25 @@
-import { useState } from 'react'
-import './App.css'
+import './index.css'
+import MainPage from './pages/MainPage';
+import LoginPage from './pages/LoginPage';
+import ErrorPage from './pages/ErrorPage';
+import SearchPage from './pages/SearchPage';
+
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
 
   return (
-    <>
-      <h1>안녕하세요.</h1>
-    </>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path='*' element={<ErrorPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
