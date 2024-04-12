@@ -66,3 +66,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@font-face {
+  font-family: "NanumSquareNeo";
+  font-weight: normal;
+  src: url("./fonts/NanumSquareNeo-eHv.ttf") format("truetype");
+}
+
+body {
+  font-family: "NanumSquareNeo";
+}
