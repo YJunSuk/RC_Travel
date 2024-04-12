@@ -6,8 +6,8 @@ export const MainHeader = () => {
         <div className="Header">
             <div className="left-section"></div>
             <div className="right-section">
-                <Link to="/login"><li>회원가입</li></Link>
-                <Link to="/login"><li>로그인</li></Link>
+                <Link to={"/login"} state={{ page: "register", isLogin: false, isSignup: true }}>회원가입</Link>
+                <Link to={"/login"} state={{ page: "login" }}>로그인</Link>
             </div>
         </div>
     );

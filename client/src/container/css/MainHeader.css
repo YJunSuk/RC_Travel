@@ -14,16 +14,16 @@
     flex:1
 }
 
-.right-section li{
+.right-section a{
     list-style-type: none;
     float:right;
     padding:10px;
     font-size:20px;
     color:black;
+    text-decoration: none;
 }
-li:hover{
+a:hover{
     text-decoration: underline;
-
 }
 
 a:focus,
