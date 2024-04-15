@@ -31,7 +31,7 @@ export const Register = () => {
                             aria-invalid={
                                 isSubmitted ? (errors.id ? "true" : "false") : undefined
                             }
-                            placeholder="아이디를 입력해주세요."
+                            placeholder="사용할 아이디를 입력해주세요."
                             {...register("id", {
                                 required: "아이디는 필수 입력입니다.",
                             })}
@@ -47,7 +47,7 @@ export const Register = () => {
                             aria-invalid={
                                 isSubmitted ? (errors.password ? "true" : "false") : undefined
                             }
-                            placeholder="비밀번호를 입력해주세요."
+                            placeholder="사용할 비밀번호를 입력해주세요."
                             {...register("password", {
                                 required: "비밀번호는 필수 입력입니다.",
                                 minLength: {
@@ -59,7 +59,7 @@ export const Register = () => {
                         <div className="underline"></div>
                         {errors.password && <small role="alert">{errors.password.message}</small>}
                     </div>
-                    <button type="submit" disabled={isSubmitting}>로그인</button>
+                    <button type="submit" disabled={isSubmitting}>회원가입</button>
                 </form>
             </div>
         </>

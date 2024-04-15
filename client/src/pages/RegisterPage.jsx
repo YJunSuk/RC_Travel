@@ -1,7 +1,8 @@
+import {Register} from '../container/Register'
 
 export const RegisterPage = () => {
     return(
-        <div>안녕하세요!</div>
+        <Register/>
     );
 }
 

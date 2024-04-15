@@ -6,7 +6,7 @@ export const MainHeader = () => {
         <div className="Header">
             <div className="left-section"></div>
             <div className="right-section">
-                <Link to={"/login"}>회원가입</Link>
+                <Link to={"/register"}>회원가입</Link>
                 <Link to={"/login"}>로그인</Link>
             </div>
         </div>
