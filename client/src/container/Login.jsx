@@ -19,7 +19,7 @@ export const Login = () => {
                 <Link to="/">
                     <img src={logo} className='login-logo' alt='React3' />
                 </Link>
-                <form onSubmit={handleSubmit(async (data) => {
+                <form action="/login" onSubmit={handleSubmit(async (data) => {
                     await new Promise((r) => setTimeout(r, 1000));
                     alert(JSON.stringify(data));
                 })}>
