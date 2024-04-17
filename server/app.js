@@ -18,27 +18,29 @@ app.set("port", process.env.PORT || 3000);
 app.get('/', (req, res) => {
   return res.send('Hello');
 })
- 
+
 app.post('/signup', (req, res) => {
   const body = req.body;
-
+  console.dir(body);
   const sql = 'SELECT id FROM users WHERE id = ?';
   conn.query(sql, [body.id], (err, results) => {
     if (err) {
       console.log("Error executing query: " + err);
-      res.sendStatus(500); 
+      console.dir(body);
+      res.sendStatus(500);
     } else {
-      if (results.length > 0) {
+      if (results && results.length > 0) {
         console.log("이미 존재하는 ID입니다.");
-        res.sendStatus(400);
+        //TODO: 예전에 회원가입하고 삭제한 ID가 DB에 있다고 인식됨
+        res.sendStatus(401);
       } else {
-        const sqlInsert = 'INSERT INTO users (id, password) VALUES (?, ?)';
-        conn.query(sqlInsert, [body.id, body.password], (err) => {
+        const sql2 = 'INSERT INTO users (id, password) VALUES (?, ?)';
+        conn.query(sql2, [body.id, body.password], (err) => {
           if (err) {
             console.log("Error executing query: " + err);
-            res.sendStatus(500); 
+            res.sendStatus(500);
           } else {
-            res.sendStatus(200); 
+            res.sendStatus(200);
           }
         });
       }
@@ -53,12 +55,12 @@ app.post('/login', (req, res) => {
   conn.query(sql, [body.id, body.password], (err, results) => {
     if (err) {
       console.log("Error executing query: " + err);
-      res.sendStatus(500); 
+      res.sendStatus(500);
     } else {
       if (results.length === 0) {
         res.sendStatus(401);
       } else {
-        res.sendStatus(200); 
+        res.sendStatus(200);
       }
     }
   });
@@ -67,6 +69,62 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   res.redirect('/');
 });
+
+app.put('/modify', (req, res) => {
+  const { id, password } = req.body;
+  if (!id || !password) {
+    console.log(id + password);
+    res.sendStatus(401);
+  }
+  const sql = 'UPDATE users SET password = ? WHERE id = ?';
+  conn.query(sql, [password, id], (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.sendStatus(500);
+    }
+
+    if (result.affectedRows === 0) {
+      console.log("존재하지않는 아이디");
+      res.sendStatus(400);
+    }
+  })
+  console.log("업데이트 성공");
+  res.sendStatus(200);
+});
+
+app.delete('/delete', (req, res) => {
+  const { id } = req.body;
+  if (!id) {
+    res.sendStatus(401);
+  }
+  const sql = 'DELETE FROM users WHERE id = ?';
+  conn.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.sendStatus(500);
+    }
+    if (result.affectedRows === 0) {
+      console.log("존재하지않는 아이디");
+      res.sendStatus(400);
+    }
+  })
+  console.log("삭제 성공");
+  res.sendStatus(200);
+});
+
+app.get('/search', async (req, res) => {
+  const { keyword, category } = req.query;
+  console.log(keyword);
+  console.log(category);
+  const sql = `SELECT * FROM travel_destinations WHERE td_name LIKE ? AND category = ?`
+  try {
+    const [rows, fields] = await conn.promise().query(sql, [`%${keyword}%`, category]);
+    res.json(rows);
+  } catch (error) {
+    console.error('Error executing query:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
 
 
 app.listen(3000, () => {

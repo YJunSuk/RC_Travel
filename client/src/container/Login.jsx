@@ -1,20 +1,62 @@
 import './css/Login.css';
 import photo from '../assets/photo.jpg';
 import logo from '../assets/logo.png';
-import React from 'react'
+import { React, useContext, useState } from 'react'
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios"   
+import { loginContext } from '../App';
 
 export const Login = () => {
-    const [user, serUser] = useState({
-        id: "",
-        pw: "",
-    })
+    const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
+
+    const userInfo = {
+        id: id,
+        password: password,
+        flag: false,
+    }
+    const {setLoginUser} = useContext(loginContext);
+    const navigate = useNavigate();
+
     const {
         register,
-        handleSubmit,
         formState: { isSubmitting, isSubmitted, errors },
     } = useForm();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!id || !password) {
+            alert('아이디와 비밀번호를 모두 입력해주세요.');
+            return;
+        }
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('password', password);
+        try {
+                const res = await axios.post('http://localhost:3000/login', {
+                id,
+                password,
+            });
+            if (res.status === 200) {
+                alert('로그인이 완료되었습니다.');
+                setLoginUser({...userInfo, flag: true});
+                navigate('/');
+            }else{
+                alert("로그인에 실패했습니다.");
+            }
+
+        } catch (error) {
+            console.log(error.response.status);
+            if(error.response.status === 401){
+                alert("아이디와 비밀번호가 틀렸습니다.");
+                setId('');
+                setPassword('');
+            }else{
+                alert("로그인에 실패했습니다.");
+            }
+        }
+    };
 
     return (
         <>
@@ -23,10 +65,7 @@ export const Login = () => {
                 <Link to="/">
                     <img src={logo} className='login-logo' alt='React3' />
                 </Link>
-                <form action="/login" onSubmit={handleSubmit(async (data) => {
-                    await new Promise((r) => setTimeout(r, 1000));
-                    alert(JSON.stringify(data));
-                })}>
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="id"></label>
                     <div className="input-container">
                         <input
@@ -39,6 +78,8 @@ export const Login = () => {
                             {...register("id", {
                                 required: "아이디는 필수 입력입니다.",
                             })}
+                            value={id}
+                            onChange={(e) => setId(e.target.value)}
                         />
                         <div className="underline"></div>
                         {errors.id && <small role="alert">{errors.id.message}</small>}
@@ -55,6 +96,8 @@ export const Login = () => {
                             {...register("password", {
                                 required: "비밀번호는 필수 입력입니다.",
                             })}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <div className="underline"></div>
                         {errors.password && <small role="alert">{errors.password.message}</small>}

@@ -2,13 +2,13 @@ import logo from '../assets/logo.png';
 import Icon from '../assets/Icon.png';
 import './css/Content.css';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Content = () => {
     const navigate = useNavigate();
 
     const selectList = [
-        {value: "default", name:"카테고리"},
+        { value: "default", name: "카테고리" },
         { value: "food", name: "음식" },
         { value: "tour", name: "관광지" },
         { value: "extreme", name: "익스트림" },
@@ -29,7 +29,7 @@ export const Content = () => {
     }
 
     const btnClick = () => {
-        navigate('/search', { state: '여기다가 카테고리랑 검색데이터 슝 보내면 됨' });
+        navigate('/search', { state: {category: select, data: text} });
     }
     return (
         <div className="content">

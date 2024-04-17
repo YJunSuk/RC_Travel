@@ -69,12 +69,13 @@ input[type=text]:focus {
     width:80px;
     height: 40px;
     margin-top: 270px;
-    margin-left: 15px;
+    margin-left: 20px;
     border: 0;
     border-radius: 15px;
     outline: none;
     background-color: rgb(233, 233, 233);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
 }
 
 .searchBtn:active {

@@ -1,0 +1,9 @@
+#map_div{
+    position: absolute;
+    top: -32px;
+}
+
+.wrap_map{
+    position: absolute;
+    width:1540px;
+}

@@ -1,0 +1,35 @@
+.content_2 {
+    position: fixed;
+    z-index: 9999;
+    top: 80px;
+    left: 400px;
+    width: 350px;
+    height: 615px;
+    text-align: center;
+    background-color: rgb(233, 233, 233);
+    border-radius: 15px;
+    outline:none;
+    margin:5px;
+}
+
+.wrap_detail{
+    display: flex;
+    margin:15px;
+    padding:15px;
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+}
+.detail{
+    border: solid 1px black;
+    width:100%;
+    height: auto;
+    padding:15px;
+}
+
+.wrap_review{
+    display: flex;
+    margin:15px;
+    padding:15px;
+    height: 420px;
+    background-color: rgb(255, 255, 255);
+}

@@ -1,0 +1,126 @@
+.content_1 {
+    position: fixed;
+    z-index: 9999;
+    top: 80px;
+    width: 400px;
+    height: 623px;
+    text-align: center;
+}
+
+.wrap_1 {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: auto;
+}
+
+.search_1 {
+    width: 290px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 15px;
+    z-index: 1;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(233, 233, 233);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.select_1 {
+    position: fixed;
+    font-family: "NanumSquareNeo";
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    z-index: 1;
+    top: 165px;
+    left: 290px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    background-color: rgb(233, 233, 233);
+    text-align: center;
+}
+
+.search_Btn {
+    font-family: "NanumSquareNeo";
+    font-size: 16px;
+    width: 60px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 12px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    background-color: rgb(233, 233, 233);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+
+.search_Btn:active {
+    box-shadow: inset -.3rem -.1rem 1.4rem #FBFBFB, inset .3rem .4rem .8rem #BEC5D0;
+    cursor: pointer;
+}
+
+.keyword {
+    position: fixed;
+    top: 175px;
+    left: 22px;
+}
+
+.destination_list {
+    display: flex;
+    position: relative;
+    top: 130px;
+    width:100%;
+    height: 490px;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.destination_list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.destination_list::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 7px;
+}
+
+.destination_list::-webkit-scrollbar-track {
+    background-color: rgb(233, 233, 233);
+    border-radius: 7px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
+.destination {
+    display:flex;
+    width: 350px;
+    height: 120px;
+    background-color: rgb(233, 233, 233);
+    border-radius: 15px;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+
+}
+
+.img{
+    width: 100px;
+    height: 60px;
+    padding: 8px;
+    margin-right:5px;
+    border: 1px solid black;
+}
+
+.wrap_content{
+    display:flex;
+    flex-direction: column;
+    padding:8px;
+    width:100%;
+    border: 1px solid black;
+}
+
