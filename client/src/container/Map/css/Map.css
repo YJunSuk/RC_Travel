@@ -7,3 +7,25 @@
     position: absolute;
     width:1540px;
 }
+
+.add_btn{
+    position: fixed;
+    z-index: 999;
+    width: 130px;
+    height: 50px;
+    top:620px;
+    left:1380px;
+    font-family: "NanumSquareNeo";
+    font-size: 16px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    background-color: rgb(233, 233, 233);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+
+.add_btn:active {
+    box-shadow: inset -.3rem -.1rem 1.4rem #FBFBFB, inset .3rem .4rem .8rem #BEC5D0;
+    cursor: pointer;
+}

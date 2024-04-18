@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import './css/Search.css';
 import Destination from '../Destination';
 import { useLocation } from 'react-router-dom';
+import { dtContext } from '../../App';
 
-export const Search = () => {
+export const Search = ({onDestinationClick}) => {
     const location = useLocation();
     const { category, data } = location.state;
+    const {setDestId} = useContext(dtContext);
 
     const [select, setSelect] = useState(category);
     const [text, setText] = useState(data);
     const [keyword, setKeyword] = useState(data);
     const [destinations, setDestinations] = useState([]);
+    const [selectedDestinationId, setSelectedDestinationId] = useState(null);
 
     const selectList = [
         { value: "default", name: "카테고리" },
@@ -31,17 +34,20 @@ export const Search = () => {
     const handleClick = () => {
         setKeyword(text);
     };
+    const handleDestinationClick = (id) =>{
+        setSelectedDestinationId(id);
+        setDestId(id);
+        onDestinationClick(id); 
+    };
 
     useEffect(() => {
-        // 검색어(keyword)가 변경되면 데이터를 가져옴
         const fetchData = async () => {
-            console.log(keyword);
-            console.log(select);
             try {
                 const res = await axios.get('http://localhost:3000/search', {
                     params: {
                         keyword: keyword,
-                        category: select
+                        category: select,
+                        destinatinoId: selectedDestinationId,
                     }
                 });
                 setDestinations(res.data);
@@ -51,7 +57,7 @@ export const Search = () => {
         };
 
         fetchData();
-    }, [keyword, select]);
+    }, [keyword, select, selectedDestinationId]);
 
     return (
         <>
@@ -74,10 +80,12 @@ export const Search = () => {
                     <div className="destination_list">
                         {destinations.map((item) => (
                             <Destination
-                                key={item.id} 
+                                key={item.id}
+                                id={item.id} 
                                 imgURL={item.td_picture_url}
                                 name={item.td_name}
                                 category={item.category}
+                                onClick={handleDestinationClick}
                             />
                         ))}
                     </div>

@@ -114,8 +114,7 @@ app.delete('/delete', (req, res) => {
 
 app.get('/search', async (req, res) => {
   const { keyword, category } = req.query;
-  console.log(keyword);
-  console.log(category);
+
   const sql = `SELECT * FROM travel_destinations WHERE td_name LIKE ? AND category = ?`
   try {
     const [rows, fields] = await conn.promise().query(sql, [`%${keyword}%`, category]);
@@ -125,6 +124,62 @@ app.get('/search', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 })
+
+app.get('/destinationCoords', async (req, res) => {
+  const { id } = req.query;
+  const sql = `SELECT loc_x, loc_y FROM travel_destinations WHERE id = ?`;
+
+  try {
+    const [rows, fields] = await conn.promise().query(sql, [id]);
+    if (rows.length === 0) {
+      res.status(404).json({ error: 'Destination not found' });
+    } else {
+      const { loc_x, loc_y } = rows[0];
+      res.json({ loc_x, loc_y });
+    }
+  } catch (error) {
+    console.error('Error executing query:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/review', async (req, res) => {
+  const { id } = req.query;
+  const sql = `SELECT * FROM reviews WHERE destination_id = ?`;
+
+  try {
+    const [rows, fields] = await conn.promise().query(sql, [id]);
+    res.json(rows);
+  } catch (error) {
+    console.error('Error executing query:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/addPlace', async (req, res) => {
+  try {
+    const { name, text, select, imageUrl } = req.body;
+    console.log(imageUrl);
+    conn.query(
+      'INSERT INTO travel_destinations (td_name, td_picture_url, description, category) VALUES (?, ?, ?, ?)',
+      [name, imageUrl, text, select],
+      (error, results) => {
+        if (error) {
+          console.error('Error adding place:', error);
+          res.status(500).json({ success: false, error: error.message });
+          return;
+        }
+        
+        const lastInsertedId = results.insertId;
+
+        res.status(200).json({ success: true, lastInsertedId: lastInsertedId });
+      }
+    );
+  } catch (error) {
+    console.error('Error adding place:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 
 app.listen(3000, () => {

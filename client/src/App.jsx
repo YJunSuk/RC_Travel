@@ -7,9 +7,11 @@ import RegisterPage from './pages/RegisterPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createContext, useState } from 'react';
 import ModifyPage from './pages/ModifyPage';
+import AddMapPage from './pages/AddMapPage';
 
 
 export const loginContext = createContext();
+export const dtContext = createContext();
 
 function App() {
   const [loginUser, setLoginUser] = useState({
@@ -17,22 +19,28 @@ function App() {
     password: "",
     flag: false,
   });
+  const [destId, setDestId] = useState({
+    id: "",
+  });
 
   return (
-    <loginContext.Provider value={{ loginUser, setLoginUser }}>
-      <div className="App">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path='/register' element={<RegisterPage />} />
-            <Route path='/modify' element={<ModifyPage />} />
-            <Route path='*' element={<ErrorPage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </loginContext.Provider>
+    <dtContext.Provider value={{ destId, setDestId }}>
+      <loginContext.Provider value={{ loginUser, setLoginUser }}>
+        <div className="App">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path='/register' element={<RegisterPage />} />
+              <Route path='/modify' element={<ModifyPage />} />
+              <Route path='/add' element={<AddMapPage/>}/>
+              <Route path='*' element={<ErrorPage />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </loginContext.Provider>
+    </dtContext.Provider>
   )
 }
 
