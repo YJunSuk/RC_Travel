@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import './css/AddMap.css';
 import axios from 'axios';
 import ImageUploader from "./ImageUploader";
+import { useNavigate } from "react-router-dom";
+import { loginContext } from '../App';
 
 const { Tmapv3 } = window;
 
 export const AddMap = () => {
     const [map, setMap] = useState(null);
-    const [marker, setMarker] = useState(null);
     const [text, setText] = useState('');
     const [name, setName] = useState('');
-    const [category, setCategory] = useState();
     const [imageUrl, setImageUrl] = useState('');
 
+    const {loginUser} = useContext(loginContext);
     const mapDiv = document.getElementById('add_map_div')
     const [select, setSelect] = useState("default");
-
+    const navigate = useNavigate();
 
     const selectList = [
         { value: "default", name: "카테고리" },
@@ -35,7 +36,13 @@ export const AddMap = () => {
         setName(e.target.value);
     }
     const handleSend = () => {
+        if (!name || !select) {
+            alert("여행지 이름과 카테고리를 입력하세요.");
+            return;
+        }
+        console.log(imageUrl);
         const data = {
+            user_id: loginUser.id,
             name: name,
             text: text,
             select: select,
@@ -48,10 +55,11 @@ export const AddMap = () => {
             .catch(error => {
                 console.error('Error adding place:', error);
             });
-
+        navigate(-1);
     }
-    
+
     const handleImageUpload = (url) => {
+        console.log(url);
         setImageUrl(url);
     };
 
@@ -86,7 +94,7 @@ export const AddMap = () => {
                         );
                     })}
                 </select>
-                <ImageUploader onUpload={handleImageUpload}/>
+                <ImageUploader onUpload={handleImageUpload} />
                 <button className="send_btn" onClick={handleSend}>작성완료</button>
             </div>
         </div>

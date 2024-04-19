@@ -6,7 +6,7 @@ export const ReviewCard = ({ id, imgURL, content, rating, createDate }) => {
 ;
     return (
         <div className="review" id={id}>
-            <div className="img">{imgURL}</div>
+            <img className="rv_img" src={imgURL}/>
             <div className="wrap_contents">
                 <div className="rating">평점 : {rating}</div>
                 <div className="description">{content}</div>

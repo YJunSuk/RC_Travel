@@ -51,6 +51,7 @@ export const Search = ({onDestinationClick}) => {
                     }
                 });
                 setDestinations(res.data);
+                console.log(res);
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }

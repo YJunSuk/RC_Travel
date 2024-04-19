@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createContext, useState } from 'react';
 import ModifyPage from './pages/ModifyPage';
 import AddMapPage from './pages/AddMapPage';
+import AddReviewPage from './pages/AddReviewPage';
 
 
 export const loginContext = createContext();
@@ -35,6 +36,7 @@ function App() {
               <Route path='/register' element={<RegisterPage />} />
               <Route path='/modify' element={<ModifyPage />} />
               <Route path='/add' element={<AddMapPage/>}/>
+              <Route path='/review' element={<AddReviewPage/>}/>
               <Route path='*' element={<ErrorPage />} />
             </Routes>
           </BrowserRouter>

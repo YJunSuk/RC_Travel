@@ -4,9 +4,17 @@ const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const db = require("./config/mysql.js");
-
 const app = express();
 const conn = db.init();
+const path = require('path');
+
+const uploadDirectory = 'uploads/';
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+if (!fs.existsSync(uploadDirectory)) {
+  fs.mkdirSync(uploadDirectory);
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,6 +22,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.set("port", process.env.PORT || 3000);
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') 
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname) 
+  }
+});
+
+const upload = multer({ storage: storage });
 
 app.get('/', (req, res) => {
   return res.send('Hello');
@@ -125,6 +144,18 @@ app.get('/search', async (req, res) => {
   }
 })
 
+app.post('/upload', upload.single('file'), (req, res) => {
+  try {
+    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    res.send(imageUrl); 
+    console.log(imageUrl);
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).json({ error: 'Error uploading file' });
+  }
+});
+
+
 app.get('/destinationCoords', async (req, res) => {
   const { id } = req.query;
   const sql = `SELECT loc_x, loc_y FROM travel_destinations WHERE id = ?`;
@@ -156,13 +187,27 @@ app.get('/review', async (req, res) => {
   }
 });
 
+app.post('/addReview', (req, res) => {
+  const { user_id, destination_id, review_content, review_picture_url, rating, create_date } = req.body;
+  const query = 'INSERT INTO reviews (user_id, destination_id, review_content, review_picture_url, rating, create_date) VALUES (?, ?, ?, ?, ?, ?)';
+
+  conn.query(query, [user_id, destination_id, review_content, review_picture_url,rating, create_date], (error, results) => {
+    if (error) {
+      console.error('Error adding review:', error);
+      res.status(500).json({ success: false, message: "Error adding review" });
+      return;
+    }
+
+    res.status(200).json({ success: true, message: 'Review added successfully' });
+  });
+});
+
 app.post('/addPlace', async (req, res) => {
   try {
-    const { name, text, select, imageUrl } = req.body;
-    console.log(imageUrl);
+    const { user_id, name, text, select, imageUrl } = req.body;
     conn.query(
-      'INSERT INTO travel_destinations (td_name, td_picture_url, description, category) VALUES (?, ?, ?, ?)',
-      [name, imageUrl, text, select],
+      'INSERT INTO travel_destinations (user_id, td_name, td_picture_url, description, category) VALUES (?, ?, ?, ?, ?)',
+      [user_id, name, imageUrl, text, select],
       (error, results) => {
         if (error) {
           console.error('Error adding place:', error);
@@ -180,6 +225,57 @@ app.post('/addPlace', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+app.post('/review/post', async (req, res) => {
+  try {
+    const { user_id, name, text, select, imageUrl } = req.body;
+    conn.query(
+      'INSERT INTO travel_destinations (user_id, td_name, td_picture_url, description, category) VALUES (?, ?, ?, ?, ?)',
+      [user_id, name, imageUrl, text, select],
+      (error, results) => {
+        if (error) {
+          console.error('Error adding place:', error);
+          res.status(500).json({ success: false, error: error.message });
+          return;
+        }
+        
+        const lastInsertedId = results.insertId;
+
+        res.status(200).json({ success: true, lastInsertedId: lastInsertedId });
+      }
+    );
+  } catch (error) {
+    console.error('Error adding place:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/travelDestinations', async (req, res) => {
+  try {
+      const { id } = req.query;
+      const query = 'SELECT * FROM travel_destinations WHERE id = ?';
+      
+      conn.query(query, [id], (error, results, fields) => {
+          if (error) {
+              console.error('Error fetching travel destination:', error);
+              res.status(500).json({ success: false, error: error.message });
+              return;
+          }
+
+          if (results.length === 0) {
+              res.status(404).json({ success: false, message: 'Travel destination not found' });
+              return;
+          }
+
+          res.status(200).json({ success: true, data: results[0] });
+      });
+  } catch (error) {
+      console.error('Error fetching travel destination:', error);
+      res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
 
 
 app.listen(3000, () => {

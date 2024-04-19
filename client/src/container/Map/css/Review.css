@@ -33,10 +33,9 @@
 }
 
 .detail {
-    border: solid 1px black;
     width: 100%;
     height: auto;
-    padding: 15px;
+    padding: 7px;
 }
 
 .wrap_review {
@@ -50,6 +49,8 @@
 .review {
     display: flex;
     margin: 10px;
+    border-radius: 10;
+    border: 1px solid black;
 }
 
 .review_list {
@@ -77,7 +78,7 @@
     flex-direction: column;
     padding: 8px;
     width: 100%;
-    border: 1px solid black;
+
 }
 
 .description {
@@ -87,4 +88,31 @@
 
 .date {
     font-size: 10px;
+}
+.rv_img{ 
+    width:100px;
+}
+.review_btn{
+    font-family: "NanumSquareNeo";
+    position: fixed;
+    z-index: 999;
+    left: 650px;
+    top: 240px;
+    width: 100px;
+    height: 30px;
+    font-size:14px;
+    outline: none;
+    border:none;
+    cursor: pointer;
+    background-color: rgb(233, 233, 233, 0.1);
+}
+
+select{
+    z-index: 999;
+    left: 725px;
+    width: 30px;
+    height: 20px;
+    font-size:15px;
+    cursor: pointer;
+    background-color: rgb(233, 233, 233, 0.1);
 }

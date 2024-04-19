@@ -1,26 +1,27 @@
-.map-container{
+.map-container {
     display: flex;
 }
 
 
-#add_map_div{
+#add_map_div {
     position: relative;
     top: -32px;
 }
 
-.addForm{
+.addForm {
     position: relative;
-    width:500px;
+    width: 500px;
     top: -32px;
-    height: auto;
-    padding:18px;
+    height: 500px;
+    padding: 18px;
 }
-.text_map{
-    padding:8px;
+
+.text_map {
+    padding: 8px;
     margin-top: 5px;
 }
 
-.select_2{
+.select_2 {
     font-family: "NanumSquareNeo";
     width: 100px;
     height: 40px;
@@ -37,8 +38,8 @@
     width: 300px;
     height: 10px;
     z-index: 1;
-    margin:10px;
-    padding:15px;
+    margin: 10px;
+    padding: 15px;
     font-size: 15px;
     border: 0;
     border-radius: 15px;
@@ -47,13 +48,13 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.search_desc{
+.search_desc {
     font-family: "NanumSquareNeo";
     width: 300px;
     height: 200px;
     z-index: 1;
-    margin:10px;
-    padding:15px;
+    margin: 10px;
+    padding: 15px;
     font-size: 15px;
     border: 0;
     border-radius: 15px;
@@ -62,10 +63,10 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.send_btn{
+.send_btn {
     position: relative;
-    top:100px;
-    left:150px;
+    top: 20px;
+    left: 260px;
     font-family: "NanumSquareNeo";
     width: 100px;
     height: 40px;
@@ -84,4 +85,21 @@
 .send_btn:active {
     box-shadow: inset -.3rem -.1rem 1.4rem #FBFBFB, inset .3rem .4rem .8rem #BEC5D0;
     cursor: pointer;
+}
+
+.input_btn [type=file]{
+    font-family: "NanumSquareNeo";
+    width: 210px;
+    height: 20px;
+    padding: 10px;
+    margin:10px;
+    margin-left: 0;
+    z-index: 1;
+    background-color: rgb(233, 233, 233);
+    text-align: center;
+    font-size: 16px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

@@ -5,7 +5,7 @@ import Review from "./Review";
 import Search from "./Search";
 import { dtContext } from '../../App';
 import { useNavigate } from "react-router-dom";
-
+import { loginContext } from '../../App';
 const { Tmapv3 } = window;
 
 export const Map = () => {
@@ -15,6 +15,7 @@ export const Map = () => {
   const [marker, setMarker] = useState(null);
   const mapDiv = document.getElementById('map_div');
   const { destId } = useContext(dtContext);
+  const { loginUser } = useContext(loginContext);
   const [showReview, setShowReview] = useState(false);
   const [destinationCoords, setDestinationCoords] = useState({ x: null, y: null });
 
@@ -74,7 +75,12 @@ export const Map = () => {
   };
 
   const handleClick = () => {
-    navigate('/add');
+    if (loginUser.flag == false) {
+      alert("로그인이 필요합니다.")
+      navigate('/login');
+    }else{
+      navigate('/add');
+    }
   };
 
   return (
